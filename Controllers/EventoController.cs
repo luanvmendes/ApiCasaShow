@@ -1,45 +1,49 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CasaShowAPI.Data;
 using CasaShowAPI.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CasaShowAPI.Controllers
 {
-    [Route("casadeshow")]
+    [Route("eventos")]
     [ApiController]
-    public class CasaDeShowController: ControllerBase
+    public class EventoController : ControllerBase
     {
+        private IWebHostEnvironment _hostEnvironment;
         private readonly ApplicationDbContext _context;
 
-        public CasaDeShowController (ApplicationDbContext context) 
+        public EventoController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
+            _hostEnvironment = hostEnvironment;
             _context = context;
         }
-        
+
         [HttpGet]
-        // GET: CasaDeShow
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return Ok(_context.CasaShow.ToList());
+            var categorias = _context.Categorias.ToList();
+            var casa = _context.CasaShow.ToList();
+            return Ok(await _context.Eventos.ToListAsync());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CasaDeShow casaDeShow)
+        public async Task<IActionResult> Create([FromBody] Evento evento)
         {
             if (ModelState.IsValid)
             {
-                if (casaDeShow.Nome == null || casaDeShow.Endereco == null || casaDeShow.Nome.Length < 1 || casaDeShow.Endereco.Length < 1) {
-                Response.StatusCode = 400;
-                return new ObjectResult (new {msg = "Verifique se todos os campos foram preenchidos"});                
-                }
-                _context.Add(casaDeShow);
+                evento.CasaShow = _context.CasaShow.First(cs => cs.Id == evento.CasaShow.Id);
+                evento.Categoria = _context.Categorias.First(ctg => ctg.Id == evento.Categoria.Id);
+                _context.Add(evento);
                 await _context.SaveChangesAsync();                
                 Response.StatusCode = 201;
                 return new ObjectResult ("");
-                //return RedirectToAction(nameof(Index));
             }
             Response.StatusCode = 404;
 
@@ -47,9 +51,9 @@ namespace CasaShowAPI.Controllers
         }
 
         [HttpPatch]
-        public async Task<IActionResult> Edit([FromBody] CasaDeShow casaDeShow)
+        public async Task<IActionResult> Edit([FromBody] Evento evento)
         {
-            if (casaDeShow.Id == 0)
+            if (evento.Id == 0)
             {
                 return NotFound("Id inválido");
             }
@@ -58,12 +62,17 @@ namespace CasaShowAPI.Controllers
             {
                 try
                 {
-                    _context.Update(casaDeShow);
+                    evento.CasaShow = _context.CasaShow.First(cs => cs.Id == evento.CasaShow.Id);
+                    evento.Categoria = _context.Categorias.First(ctg => ctg.Id == evento.Categoria.Id);
+                    if (evento.Imagem != null) {
+                        evento.Imagem = evento.Imagem;
+                    }                    
+                    _context.Update(evento);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CasaDeShowExists(casaDeShow.Id))
+                    if (!EventoExists(evento.Id))
                     {
                         return NotFound();
                     }
@@ -73,7 +82,6 @@ namespace CasaShowAPI.Controllers
                     }
                 }
                 return Ok();
-                //return RedirectToAction(nameof(Index));
             }
             return BadRequest();
         }
@@ -81,9 +89,9 @@ namespace CasaShowAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try {
-                var casaDeShow = await _context.CasaShow.FindAsync(id);
-                _context.CasaShow.Remove(casaDeShow);
+            try{
+                var evento = await _context.Eventos.FindAsync(id);
+                _context.Eventos.Remove(evento);
                 await _context.SaveChangesAsync();
                 return Ok();
             } catch (Exception e) {
@@ -94,10 +102,9 @@ namespace CasaShowAPI.Controllers
             }
         }
 
-
-        private bool CasaDeShowExists(int id)
+        private bool EventoExists(int id)
         {
-            return _context.CasaShow.Any(e => e.Id == id);
+            return _context.Eventos.Any(e => e.Id == id);
         }
     }
 }

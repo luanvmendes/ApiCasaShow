@@ -8,38 +8,37 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CasaShowAPI.Controllers
 {
-    [Route("casadeshow")]
+    [Route("categorias")]
     [ApiController]
-    public class CasaDeShowController: ControllerBase
+    public class CategoriaController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public CasaDeShowController (ApplicationDbContext context) 
+        public CategoriaController(ApplicationDbContext context)
         {
             _context = context;
         }
-        
+
         [HttpGet]
-        // GET: CasaDeShow
-        public IActionResult Index()
+        // GET: Categoria
+        public async Task<IActionResult> Index()
         {
-            return Ok(_context.CasaShow.ToList());
+            return Ok(await _context.Categorias.ToListAsync());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CasaDeShow casaDeShow)
+        public async Task<IActionResult> Create([FromBody] Categoria categoria)
         {
             if (ModelState.IsValid)
             {
-                if (casaDeShow.Nome == null || casaDeShow.Endereco == null || casaDeShow.Nome.Length < 1 || casaDeShow.Endereco.Length < 1) {
+                if (categoria.Nome == null || categoria.Nome.Length < 1) {
                 Response.StatusCode = 400;
-                return new ObjectResult (new {msg = "Verifique se todos os campos foram preenchidos"});                
+                return new ObjectResult (new {msg = "Insira o nome da categoria"});                
                 }
-                _context.Add(casaDeShow);
+                _context.Add(categoria);
                 await _context.SaveChangesAsync();                
                 Response.StatusCode = 201;
                 return new ObjectResult ("");
-                //return RedirectToAction(nameof(Index));
             }
             Response.StatusCode = 404;
 
@@ -47,9 +46,9 @@ namespace CasaShowAPI.Controllers
         }
 
         [HttpPatch]
-        public async Task<IActionResult> Edit([FromBody] CasaDeShow casaDeShow)
+        public async Task<IActionResult> Edit([FromBody] Categoria categoria)
         {
-            if (casaDeShow.Id == 0)
+            if (categoria.Id == 0)
             {
                 return NotFound("Id inválido");
             }
@@ -58,12 +57,12 @@ namespace CasaShowAPI.Controllers
             {
                 try
                 {
-                    _context.Update(casaDeShow);
+                    _context.Update(categoria);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CasaDeShowExists(casaDeShow.Id))
+                    if (!CategoriaExists(categoria.Id))
                     {
                         return NotFound();
                     }
@@ -73,7 +72,6 @@ namespace CasaShowAPI.Controllers
                     }
                 }
                 return Ok();
-                //return RedirectToAction(nameof(Index));
             }
             return BadRequest();
         }
@@ -82,10 +80,9 @@ namespace CasaShowAPI.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try {
-                var casaDeShow = await _context.CasaShow.FindAsync(id);
-                _context.CasaShow.Remove(casaDeShow);
-                await _context.SaveChangesAsync();
-                return Ok();
+                var categoria = await _context.Categorias.FindAsync(id);
+                _context.Categorias.Remove(categoria);
+                await _context.SaveChangesAsync();return Ok();
             } catch (Exception e) {
 
                 Response.StatusCode = 404;
@@ -94,10 +91,9 @@ namespace CasaShowAPI.Controllers
             }
         }
 
-
-        private bool CasaDeShowExists(int id)
+        private bool CategoriaExists(int id)
         {
-            return _context.CasaShow.Any(e => e.Id == id);
+            return _context.Categorias.Any(e => e.Id == id);
         }
     }
 }
