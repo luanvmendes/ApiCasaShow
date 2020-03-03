@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CasaShowAPI.Data;
 using CasaShowAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ namespace CasaShowAPI.Controllers
 {
     [Route("categorias")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class CategoriaController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

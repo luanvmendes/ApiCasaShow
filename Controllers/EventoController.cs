@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CasaShowAPI.Data;
 using CasaShowAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ namespace CasaShowAPI.Controllers
 {
     [Route("eventos")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class EventoController : ControllerBase
     {
         private IWebHostEnvironment _hostEnvironment;

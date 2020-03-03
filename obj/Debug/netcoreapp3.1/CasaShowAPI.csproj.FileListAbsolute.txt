@@ -38,3 +38,17 @@ C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\obj\Debug\netcoreapp3.1\staticwebassets
 C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\obj\Debug\netcoreapp3.1\staticwebassets\CasaShowAPI.StaticWebAssets.xml
 C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\obj\Debug\netcoreapp3.1\CasaShowAPI.dll
 C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\obj\Debug\netcoreapp3.1\CasaShowAPI.pdb
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\obj\Debug\netcoreapp3.1\CasaShowAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\CasaShowAPI.xml
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\obj\Debug\netcoreapp3.1\CasaShowAPI.xml
