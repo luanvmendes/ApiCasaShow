@@ -14,11 +14,6 @@
             Cadastrar casa de show.
             </summary>
         </member>
-        <member name="M:CasaShowAPI.Controllers.CasaDeShowController.BuscaId(System.Int32)">
-            <summary>
-            Busca por id.
-            </summary>
-        </member>
         <member name="M:CasaShowAPI.Controllers.CasaDeShowController.Edit(CasaShowAPI.Models.CasaDeShow)">
             <summary>
             Editar casa de show.
@@ -27,6 +22,11 @@
         <member name="M:CasaShowAPI.Controllers.CasaDeShowController.DeleteConfirmed(System.Int32)">
             <summary>
             Remove uma casa de show.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CasaDeShowController.BuscaId(System.Int32)">
+            <summary>
+            Busca por id.
             </summary>
         </member>
         <member name="M:CasaShowAPI.Controllers.CasaDeShowController.NomeAsc">
@@ -42,6 +42,26 @@
         <member name="M:CasaShowAPI.Controllers.CasaDeShowController.Busca(System.String)">
             <summary>
             Busca por nome.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CategoriaController.Index">
+            <summary>
+            Listar categorias.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CategoriaController.Create(CasaShowAPI.Models.Categoria)">
+            <summary>
+            Cadastrar categoria.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CategoriaController.Edit(CasaShowAPI.Models.Categoria)">
+            <summary>
+            Editar categoria.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CategoriaController.DeleteConfirmed(System.Int32)">
+            <summary>
+            Remover categoria.
             </summary>
         </member>
     </members>

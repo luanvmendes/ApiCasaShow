@@ -15,7 +15,7 @@ namespace CasaShowAPI.Controllers
 {
     [Route("eventos")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class EventoController : ControllerBase
     {
         private IWebHostEnvironment _hostEnvironment;
@@ -40,12 +40,29 @@ namespace CasaShowAPI.Controllers
         {
             if (ModelState.IsValid)
             {
-                evento.CasaShow = _context.CasaShow.First(cs => cs.Id == evento.CasaShow.Id);
-                evento.Categoria = _context.Categorias.First(ctg => ctg.Id == evento.Categoria.Id);
-                _context.Add(evento);
-                await _context.SaveChangesAsync();                
-                Response.StatusCode = 201;
-                return new ObjectResult ("");
+                if (_context.CasaShow.Count() == 0) {
+                    Response.StatusCode = 404;
+
+                    return new ObjectResult ("Cadastre uma casa de show antes de criar um evento");
+
+                } else if (_context.Categorias.Count() == 0) {                    
+                    Response.StatusCode = 404;
+
+                    return new ObjectResult ("Cadastre uma categoria antes de criar um evento");
+                }
+                try{
+                    evento.CasaShow = _context.CasaShow.First(cs => cs.Id == evento.CasaShow.Id);
+                    evento.Categoria = _context.Categorias.First(ctg => ctg.Id == evento.Categoria.Id);
+                    _context.Add(evento);
+                    await _context.SaveChangesAsync();                
+                    Response.StatusCode = 201;
+                    return new ObjectResult ("");
+                } catch (Exception e) {
+
+                    Response.StatusCode = 404;
+
+                    return new ObjectResult ("");
+                }
             }
             Response.StatusCode = 404;
 

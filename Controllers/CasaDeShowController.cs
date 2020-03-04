@@ -11,6 +11,7 @@ namespace CasaShowAPI.Controllers
 {
     [Route("casadeshow")]
     [ApiController]
+    //[Authorize(Roles = "Admin")]
     public class CasaDeShowController: ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -27,7 +28,13 @@ namespace CasaShowAPI.Controllers
         // GET: CasaDeShow
         public IActionResult Index()
         {
-            return Ok(_context.CasaShow.ToList());
+            if (_context.CasaShow.Count() == 0) {                
+                Response.StatusCode = 404;
+
+                return new ObjectResult ("Não há casa de show cadastrada");
+            } else {
+                return Ok(_context.CasaShow.ToList());
+            }
         }
         /// <summary>
         /// Cadastrar casa de show.
@@ -37,34 +44,23 @@ namespace CasaShowAPI.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (casaDeShow.Nome == null || casaDeShow.Endereco == null || casaDeShow.Nome.Length < 1 || casaDeShow.Endereco.Length < 1) {
-                Response.StatusCode = 400;
-                return new ObjectResult (new {msg = "Verifique se todos os campos foram preenchidos"});                
+                try {
+                    if (casaDeShow.Nome == null || casaDeShow.Endereco == null || casaDeShow.Nome.Length < 1 || casaDeShow.Endereco.Length < 1) {
+                    Response.StatusCode = 400;
+                    return new ObjectResult (new {msg = "Verifique se todos os campos foram preenchidos"});                
+                    }
+                    _context.Add(casaDeShow);
+                    await _context.SaveChangesAsync();                
+                    Response.StatusCode = 201;
+                    return new ObjectResult ("");
+                    //return RedirectToAction(nameof(Index));
+                } catch (Exception e) {
+                    Response.StatusCode = 404;
+
+                    return new ObjectResult ("Insira os campos a serem cadastrados");
                 }
-                _context.Add(casaDeShow);
-                await _context.SaveChangesAsync();                
-                Response.StatusCode = 201;
-                return new ObjectResult ("");
-                //return RedirectToAction(nameof(Index));
-            }
-            Response.StatusCode = 404;
-
-            return new ObjectResult ("");
-        }
-
-        /// <summary>
-        /// Busca por id.
-        /// </summary>
-        [HttpGet("{id}")]
-        public async Task<IActionResult> BuscaId(int id)
-        {
-            if (_context.CasaShow.Where(cod => cod.Id == id).Count() != 0) {
-                return Ok(await _context.CasaShow.Where(cod => cod.Id == id).ToListAsync());
             } else {
-
-                Response.StatusCode = 404;
-
-                return new ObjectResult ("");
+                return BadRequest();
             }
         }
 
@@ -83,12 +79,16 @@ namespace CasaShowAPI.Controllers
             {
                 try
                 {
-                    var casa = _context.CasaShow.First(c => c.Id == casaDeShow.Id); 
-                    if (casa != null) {
-                        casa.Nome = casaDeShow.Nome != null && casaDeShow.Nome.Length > 1 ? casaDeShow.Nome : casa.Nome;
-                        casa.Endereco = casaDeShow.Endereco != null && casaDeShow.Endereco.Length > 1 ? casaDeShow.Endereco : casa.Endereco;
+                    if (CasaDeShowExists(casaDeShow.Id)) {
+                        var casa = _context.CasaShow.First(c => c.Id == casaDeShow.Id); 
+                        if (casa != null) {
+                            casa.Nome = casaDeShow.Nome != null && casaDeShow.Nome.Length > 1 ? casaDeShow.Nome : casa.Nome;
+                            casa.Endereco = casaDeShow.Endereco != null && casaDeShow.Endereco.Length > 1 ? casaDeShow.Endereco : casa.Endereco;
+                        }
+                        await _context.SaveChangesAsync();
+                    } else {
+                        return NotFound();
                     }
-                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,7 +122,23 @@ namespace CasaShowAPI.Controllers
 
                 Response.StatusCode = 404;
 
-                return new ObjectResult ("");
+                return new ObjectResult ("Id inválido");
+            }
+        }
+
+        /// <summary>
+        /// Busca por id.
+        /// </summary>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> BuscaId(int id)
+        {
+            if (_context.CasaShow.Where(cod => cod.Id == id).Count() != 0) {
+                return Ok(await _context.CasaShow.Where(cod => cod.Id == id).ToListAsync());
+            } else {
+
+                Response.StatusCode = 404;
+
+                return new ObjectResult ("Não encontrado");
             }
         }
         
@@ -132,7 +148,7 @@ namespace CasaShowAPI.Controllers
         [HttpGet("asc")]
         public async Task<IActionResult> NomeAsc()
         {
-            return Ok(await _context.Eventos.OrderBy(nome => nome.Nome).ToListAsync());
+            return Ok(await _context.CasaShow.OrderBy(nome => nome.Nome).ToListAsync());
         }
         
         /// <summary>
@@ -141,7 +157,7 @@ namespace CasaShowAPI.Controllers
         [HttpGet("desc")]
         public async Task<IActionResult> NomeDesc()
         {
-            return Ok(await _context.Eventos.OrderByDescending(nome => nome.Nome).ToListAsync());
+            return Ok(await _context.CasaShow.OrderByDescending(nome => nome.Nome).ToListAsync());
         }
 
         /// <summary>
@@ -150,13 +166,14 @@ namespace CasaShowAPI.Controllers
         [HttpGet("nome/{nome}")]
         public async Task<IActionResult> Busca(string nome)
         {
-            if (_context.Eventos.Where(n => n.Nome == nome).Count() != 0) {
-                return Ok(await _context.Eventos.Where(n => n.Nome == nome).ToListAsync());
+            //Busca ignorando case sensitive
+            if (_context.CasaShow.Where(n => n.Nome.StartsWith(nome, StringComparison.InvariantCultureIgnoreCase)).Count() != 0) {
+                return Ok(await _context.CasaShow.Where(n => n.Nome.StartsWith(nome, StringComparison.InvariantCultureIgnoreCase)).ToListAsync());
             } else {
 
                 Response.StatusCode = 404;
 
-                return new ObjectResult ("");
+                return new ObjectResult ("Não encontrado");
             }
         }
 
