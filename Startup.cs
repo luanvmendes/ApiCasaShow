@@ -6,9 +6,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using CasaShowAPI.Data;
+using CasaShowAPI.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +40,7 @@ namespace CasaShowAPI
                 options.AllowEmptyInputInBodyModelBinding = true;
             });
 
-            string chaveDeSeguranca = "teste_chave_de_seguranca_api";
+            string chaveDeSeguranca = "casa_chave_de_seguranca_api";
             var chaveSimetrica = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(chaveDeSeguranca));
             
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
@@ -46,8 +48,8 @@ namespace CasaShowAPI
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = "testeapirest",
-                    ValidAudience = "usuario_comum",
+                    ValidIssuer = "casaapirest",
+                    ValidAudience = "usuario",
                     IssuerSigningKey = chaveSimetrica
                 };
             });
@@ -71,6 +73,8 @@ namespace CasaShowAPI
             }
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseRouting();
 

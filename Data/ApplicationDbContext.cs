@@ -9,6 +9,7 @@ namespace CasaShowAPI.Data
         public DbSet<Evento> Eventos {get; set;}
         public DbSet<Categoria> Categorias {get; set;}
         public DbSet<Usuario> Usuarios {get; set;}
+        public DbSet<Venda> Vendas {get; set;}
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using CasaShowAPI.Data;
+using CasaShowAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +14,10 @@ namespace CasaShowAPI.Controllers
     [Authorize]
     public class VendasController : ControllerBase
     {
-        private IWebHostEnvironment _hostEnvironment;
         private readonly ApplicationDbContext _context;
 
-        public VendasController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
+        public VendasController(ApplicationDbContext context)
         {
-            _hostEnvironment = hostEnvironment;
             _context = context;
         }
 
@@ -28,5 +27,22 @@ namespace CasaShowAPI.Controllers
             return Ok();
         }
         
+        [HttpPost]
+        public async Task<IActionResult> Create(int id, [FromBody] Venda venda)
+        {
+            if (ModelState.IsValid)
+            {
+                var evento = _context.Eventos.First(x => x.Id == id);
+                venda.User = _context.Usuarios.First(user => user.Id == venda.User.Id);
+                venda.Evento = evento;
+                venda.Total *= venda.Quantidade;
+                evento.Capacidade -= venda.Quantidade;
+                _context.Update(evento);
+                _context.Add(venda);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return Ok(venda);
+        }
     }
 }

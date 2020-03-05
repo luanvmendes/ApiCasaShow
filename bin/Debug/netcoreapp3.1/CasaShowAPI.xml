@@ -64,5 +64,90 @@
             Remover categoria.
             </summary>
         </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.Index">
+            <summary>
+            Listar evento.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.Create(CasaShowAPI.Models.Evento)">
+            <summary>
+            Cadastrar evento.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.Edit(CasaShowAPI.Models.Evento)">
+            <summary>
+            Editar evento.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.DeleteConfirmed(System.Int32)">
+            <summary>
+            Remover evento.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.BuscaId(System.Int32)">
+            <summary>
+            Busca por id.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.NomeAsc">
+            <summary>
+            Listar em ordem alfabética crescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.NomeDesc">
+            <summary>
+            Listar em ordem alfabética decrescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.DataAsc">
+            <summary>
+            Listar por data crescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.DataDesc">
+            <summary>
+            Listar por data decrescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.CapacidadeAsc">
+            <summary>
+            Listar por capacidade crescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.CapacidadeDesc">
+            <summary>
+            Listar por capacidade decrescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.PrecoAsc">
+            <summary>
+            Listar por preço crescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.PrecoDesc">
+            <summary>
+            Listar por preço decrescente.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.UsuariosController.Registro(CasaShowAPI.Models.Usuario)">
+            <summary>
+            Cadastrar usuários.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.UsuariosController.Login(CasaShowAPI.Models.Usuario)">
+            <summary>
+            Logar usuário.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.UsuariosController.Index">
+            <summary>
+            Listar usuários.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.UsuariosController.BuscaId(System.Int32)">
+            <summary>
+            Busca por id.
+            </summary>
+        </member>
     </members>
 </doc>

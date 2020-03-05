@@ -11,7 +11,7 @@ namespace CasaShowAPI.Controllers
 {
     [Route("casadeshow")]
     [ApiController]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class CasaDeShowController: ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -46,8 +46,8 @@ namespace CasaShowAPI.Controllers
             {
                 try {
                     if (casaDeShow.Nome == null || casaDeShow.Endereco == null || casaDeShow.Nome.Length < 1 || casaDeShow.Endereco.Length < 1) {
-                    Response.StatusCode = 400;
-                    return new ObjectResult (new {msg = "Verifique se todos os campos foram preenchidos"});                
+                        Response.StatusCode = 400;
+                        return new ObjectResult (new {msg = "Verifique se todos os campos foram preenchidos"});                
                     }
                     _context.Add(casaDeShow);
                     await _context.SaveChangesAsync();                

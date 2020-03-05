@@ -27,14 +27,26 @@ namespace CasaShowAPI.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Listar evento.
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var categorias = _context.Categorias.ToList();
-            var casa = _context.CasaShow.ToList();
-            return Ok(await _context.Eventos.ToListAsync());
+            if (_context.Eventos.Count() == 0) {                
+                Response.StatusCode = 404;
+
+                return new ObjectResult ("Não há evento cadastrado");
+            } else {
+                var categorias = _context.Categorias.ToList();
+                var casa = _context.CasaShow.ToList();
+                return Ok(await _context.Eventos.ToListAsync());
+            }
         }
 
+        /// <summary>
+        /// Cadastrar evento.
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Evento evento)
         {
@@ -51,6 +63,19 @@ namespace CasaShowAPI.Controllers
                     return new ObjectResult ("Cadastre uma categoria antes de criar um evento");
                 }
                 try{
+                    if (evento.Nome == null || evento.CasaShow == null || evento.Categoria == null || evento.Data == null || evento.Imagem == null 
+                    || evento.Nome.Length < 1 || evento.Imagem.Length < 1) {
+                        Response.StatusCode = 400;
+                        return new ObjectResult (new {msg = "Verifique se todos os campos foram preenchidos"});                
+                    }
+                    if (!_context.CasaShow.Any(id => id.Id == evento.CasaShow.Id)) {
+                        Response.StatusCode = 400;
+                        return new ObjectResult (new {msg = "Verifique o id da casa de show"});  
+                    }
+                    if (!_context.Categorias.Any(id => id.Id == evento.Categoria.Id)) {
+                        Response.StatusCode = 400;
+                        return new ObjectResult (new {msg = "Verifique o id da categoria"});  
+                    }
                     evento.CasaShow = _context.CasaShow.First(cs => cs.Id == evento.CasaShow.Id);
                     evento.Categoria = _context.Categorias.First(ctg => ctg.Id == evento.Categoria.Id);
                     _context.Add(evento);
@@ -61,7 +86,7 @@ namespace CasaShowAPI.Controllers
 
                     Response.StatusCode = 404;
 
-                    return new ObjectResult ("");
+                    return new ObjectResult ("Insira os campos a serem cadastrados");
                 }
             }
             Response.StatusCode = 404;
@@ -69,6 +94,9 @@ namespace CasaShowAPI.Controllers
             return new ObjectResult ("");
         }
 
+        /// <summary>
+        /// Editar evento.
+        /// </summary>
         [HttpPatch]
         public async Task<IActionResult> Edit([FromBody] Evento evento)
         {
@@ -105,6 +133,9 @@ namespace CasaShowAPI.Controllers
             return BadRequest();
         }
 
+        /// <summary>
+        /// Remover evento.
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -119,6 +150,94 @@ namespace CasaShowAPI.Controllers
 
                 return new ObjectResult ("");
             }
+        }
+
+        /// <summary>
+        /// Busca por id.
+        /// </summary>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> BuscaId(int id)
+        {
+            if (_context.Eventos.Where(cod => cod.Id == id).Count() != 0) {
+                return Ok(await _context.Eventos.Where(cod => cod.Id == id).ToListAsync());
+            } else {
+
+                Response.StatusCode = 404;
+
+                return new ObjectResult ("Não encontrado");
+            }
+        }
+        
+        /// <summary>
+        /// Listar em ordem alfabética crescente.
+        /// </summary>
+        [HttpGet("nome/asc")]
+        public async Task<IActionResult> NomeAsc()
+        {
+            return Ok(await _context.Eventos.OrderBy(nome => nome.Nome).ToListAsync());
+        }
+        
+        /// <summary>
+        /// Listar em ordem alfabética decrescente.
+        /// </summary>
+        [HttpGet("nome/desc")]
+        public async Task<IActionResult> NomeDesc()
+        {
+            return Ok(await _context.Eventos.OrderByDescending(nome => nome.Nome).ToListAsync());
+        }
+        
+        /// <summary>
+        /// Listar por data crescente.
+        /// </summary>
+        [HttpGet("data/asc")]
+        public async Task<IActionResult> DataAsc()
+        {
+            return Ok(await _context.Eventos.OrderBy(d => d.Data).ToListAsync());
+        }
+        
+        /// <summary>
+        /// Listar por data decrescente.
+        /// </summary>
+        [HttpGet("data/desc")]
+        public async Task<IActionResult> DataDesc()
+        {
+            return Ok(await _context.Eventos.OrderByDescending(d => d.Data).ToListAsync());
+        }
+        
+        /// <summary>
+        /// Listar por capacidade crescente.
+        /// </summary>
+        [HttpGet("capacidade/asc")]
+        public async Task<IActionResult> CapacidadeAsc()
+        {
+            return Ok(await _context.Eventos.OrderBy(c => c.Capacidade).ToListAsync());
+        }
+        
+        /// <summary>
+        /// Listar por capacidade decrescente.
+        /// </summary>
+        [HttpGet("capacidade/desc")]
+        public async Task<IActionResult> CapacidadeDesc()
+        {
+            return Ok(await _context.Eventos.OrderByDescending(c => c.Capacidade).ToListAsync());
+        }
+        
+        /// <summary>
+        /// Listar por preço crescente.
+        /// </summary>
+        [HttpGet("preco/asc")]
+        public async Task<IActionResult> PrecoAsc()
+        {
+            return Ok(await _context.Eventos.OrderBy(p => p.ValorIngresso).ToListAsync());
+        }
+        
+        /// <summary>
+        /// Listar por preço decrescente.
+        /// </summary>
+        [HttpGet("preco/desc")]
+        public async Task<IActionResult> PrecoDesc()
+        {
+            return Ok(await _context.Eventos.OrderByDescending(p => p.ValorIngresso).ToListAsync());
         }
 
         private bool EventoExists(int id)
