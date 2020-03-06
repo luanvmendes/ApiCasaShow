@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using CasaShowAPI.Data;
@@ -33,14 +34,20 @@ namespace API.Controllers
             {
                 try {
                     if (usuario.Email == null || usuario.Senha == null || usuario.Email.Length < 1 || usuario.Senha.Length < 1) {
-                    Response.StatusCode = 400;
-                    return new ObjectResult (new {msg = "Verifique se todos os campos foram preenhidos"});                
+                        Response.StatusCode = 400;
+                        return new ObjectResult (new {msg = "Verifique se todos os campos foram preenhidos"});                
                     }
+                    if (_context.Usuarios.Any(e => e.Email.Equals(usuario.Email))) {
+                        Response.StatusCode = 400;
+                        return new ObjectResult (new {msg = "Verifique se todos os campos foram preenhidos"});  
+                    }
+                    var hash = new Hash(SHA512.Create());
+                    usuario.Senha = hash.CriptografarSenha(usuario.Senha);
                     _context.Add(usuario);
                     _context.SaveChanges();                
                     Response.StatusCode = 201;
                     return new ObjectResult ("Usuário cadastrado com sucesso");                
-                } catch (Exception e) {
+                } catch (Exception) {
                     Response.StatusCode = 404;
 
                     return new ObjectResult ("Insira os campos a serem cadastrados");
@@ -61,8 +68,9 @@ namespace API.Controllers
             try {
                 Usuario usuario = _context.Usuarios.First(user => user.Email.Equals(credenciais.Email));
 
-                if (usuario != null) {
-                    if (usuario.Senha.Equals(credenciais.Senha)){
+                if (usuario != null) {                    
+                    var hash = new Hash(SHA512.Create());
+                    if (hash.VerificarSenha(credenciais.Senha, usuario.Senha)){
                         string chaveDeSeguranca = "casa_chave_de_seguranca_api";
                         var chaveSimetrica = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(chaveDeSeguranca));
                         var credenciaisDeAcesso = new SigningCredentials(chaveSimetrica, SecurityAlgorithms.HmacSha256Signature);
@@ -90,7 +98,8 @@ namespace API.Controllers
                                 issuer: "casaapirest",
                                 expires: DateTime.Now.AddHours(1),
                                 audience: "usuario",
-                                signingCredentials: credenciaisDeAcesso
+                                signingCredentials: credenciaisDeAcesso,
+                                claims: claims
                             );
                             return Ok(new JwtSecurityTokenHandler().WriteToken(JWT));
                         }
@@ -104,7 +113,7 @@ namespace API.Controllers
                     return new ObjectResult("");
                 }
 
-            } catch (Exception e){
+            } catch (Exception){
                 Response.StatusCode = 401;
                 return new ObjectResult("Usuário não encontrado");
             }

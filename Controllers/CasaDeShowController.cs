@@ -54,7 +54,7 @@ namespace CasaShowAPI.Controllers
                     Response.StatusCode = 201;
                     return new ObjectResult ("");
                     //return RedirectToAction(nameof(Index));
-                } catch (Exception e) {
+                } catch (Exception) {
                     Response.StatusCode = 404;
 
                     return new ObjectResult ("Insira os campos a serem cadastrados");
@@ -118,7 +118,7 @@ namespace CasaShowAPI.Controllers
                 _context.CasaShow.Remove(casaDeShow);
                 await _context.SaveChangesAsync();
                 return Ok();
-            } catch (Exception e) {
+            } catch (Exception) {
 
                 Response.StatusCode = 404;
 

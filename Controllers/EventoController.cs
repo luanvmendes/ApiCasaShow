@@ -82,7 +82,7 @@ namespace CasaShowAPI.Controllers
                     await _context.SaveChangesAsync();                
                     Response.StatusCode = 201;
                     return new ObjectResult ("");
-                } catch (Exception e) {
+                } catch (Exception) {
 
                     Response.StatusCode = 404;
 
@@ -144,7 +144,7 @@ namespace CasaShowAPI.Controllers
                 _context.Eventos.Remove(evento);
                 await _context.SaveChangesAsync();
                 return Ok();
-            } catch (Exception e) {
+            } catch (Exception) {
 
                 Response.StatusCode = 404;
 
