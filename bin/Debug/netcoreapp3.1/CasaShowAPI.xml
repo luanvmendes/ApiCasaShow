@@ -129,6 +129,21 @@
             Listar por preço decrescente.
             </summary>
         </member>
+        <member name="M:CasaShowAPI.Controllers.VendasController.Index">
+            <summary>
+            Listar vendas.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.VendasController.Create(CasaShowAPI.Models.Venda)">
+            <summary>
+            Criar venda.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.VendasController.BuscaId(System.Int32)">
+            <summary>
+            Busca por id.
+            </summary>
+        </member>
         <member name="M:API.Controllers.UsuariosController.Registro(CasaShowAPI.Models.Usuario)">
             <summary>
             Cadastrar usuários.

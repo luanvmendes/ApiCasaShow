@@ -131,7 +131,11 @@ namespace API.Controllers
 
                 return new ObjectResult ("Não há usuário cadastrado");
             } else {
-                return Ok(_context.Usuarios.ToList());
+                return Ok(_context.Usuarios.Select(u => new {
+                    Id = u.Id,
+                    Email = u.Email,
+                    Admin = u.Admin
+                }).ToList());
             }
         }        
 
@@ -142,7 +146,11 @@ namespace API.Controllers
         public async Task<IActionResult> BuscaId(int id)
         {
             if (_context.Usuarios.Where(cod => cod.Id == id).Count() != 0) {
-                return Ok(await _context.Usuarios.Where(cod => cod.Id == id).ToListAsync());
+                return Ok(await _context.Usuarios.Where(cod => cod.Id == id).Select(u => new {
+                    Id = u.Id,
+                    Email = u.Email,
+                    Admin = u.Admin
+                }).ToListAsync());
             } else {
 
                 Response.StatusCode = 404;

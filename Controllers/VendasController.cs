@@ -21,7 +21,9 @@ namespace CasaShowAPI.Controllers
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Listar vendas.
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -34,10 +36,15 @@ namespace CasaShowAPI.Controllers
                 var casa = _context.CasaShow.ToList();
                 var ctg = _context.Categorias.ToList();
                 var user = _context.Usuarios.ToList();
-                return Ok(await _context.Vendas.Include(x => x.Evento).Where(x => x.User.Id == int.Parse(userId)).ToListAsync());
+                return Ok(await _context.Vendas.Include(x => x.Evento).Where(x => x.User.Id == int.Parse(userId)).Select(dados => new {
+                    dados.Id, dados.User.Email, dados.Data, dados.Evento.Nome, dados.Quantidade, dados.Total
+                }).ToListAsync());
             }
         }
         
+        /// <summary>
+        /// Criar venda.
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Venda venda)
         {
@@ -64,7 +71,28 @@ namespace CasaShowAPI.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return Ok(venda);
+            return Ok();
+        }
+        /// <summary>
+        /// Busca por id.
+        /// </summary>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> BuscaId(int id)
+        {            
+            var casa = _context.CasaShow.ToList();
+            var ctg = _context.Categorias.ToList();
+            var user = _context.Usuarios.ToList();
+            var evento = _context.Eventos.ToList();
+            if (_context.Vendas.Where(cod => cod.Id == id).Count() != 0) {
+                return Ok(await _context.Vendas.Where(cod => cod.Id == id).Select(dados => new {
+                    dados.Id, dados.User.Email, dados.Data, dados.Evento.Nome, dados.Quantidade, dados.Total
+                }).ToListAsync());
+            } else {
+
+                Response.StatusCode = 404;
+
+                return new ObjectResult ("Não encontrado");
+            }
         }
     }
 }

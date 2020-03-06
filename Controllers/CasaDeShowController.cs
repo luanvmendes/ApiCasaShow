@@ -70,6 +70,8 @@ namespace CasaShowAPI.Controllers
         [HttpPatch]
         public async Task<IActionResult> Edit([FromBody] CasaDeShow casaDeShow)
         {
+            try
+            {
             if (casaDeShow.Id == 0)
             {
                 return NotFound("Id inválido");
@@ -104,7 +106,13 @@ namespace CasaShowAPI.Controllers
                 return Ok();
                 //return RedirectToAction(nameof(Index));
             }
+            
             return BadRequest();
+            
+                
+            } catch (Exception){
+                return BadRequest("Deu ruim");
+            }
         }
 
         /// <summary>

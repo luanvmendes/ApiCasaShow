@@ -15,7 +15,7 @@ namespace CasaShowAPI.Controllers
 {
     [Route("eventos")]
     [ApiController]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class EventoController : ControllerBase
     {
         private IWebHostEnvironment _hostEnvironment;
@@ -38,9 +38,11 @@ namespace CasaShowAPI.Controllers
 
                 return new ObjectResult ("Não há evento cadastrado");
             } else {
-                var categorias = _context.Categorias.ToList();
-                var casa = _context.CasaShow.ToList();
-                return Ok(await _context.Eventos.ToListAsync());
+               // var categorias = _context.Categorias.ToList();
+               // var casa = _context.CasaShow.ToList();
+                return Ok(await _context.Eventos.Select(dados => new {
+                    dados.Id, dados.Nome, dados.Capacidade, dados.Data, dados.ValorIngresso, CasadeShow = dados.CasaShow.Nome, Gênero = dados.Categoria.Nome, dados.Imagem
+                }).ToListAsync());
             }
         }
 
@@ -159,7 +161,9 @@ namespace CasaShowAPI.Controllers
         public async Task<IActionResult> BuscaId(int id)
         {
             if (_context.Eventos.Where(cod => cod.Id == id).Count() != 0) {
-                return Ok(await _context.Eventos.Where(cod => cod.Id == id).ToListAsync());
+                return Ok(await _context.Eventos.Where(cod => cod.Id == id).Select(dados => new {
+                    dados.Id, dados.Nome, dados.Capacidade, dados.Data, dados.ValorIngresso, CasadeShow = dados.CasaShow.Nome, Gênero = dados.Categoria.Nome, dados.Imagem
+                }).ToListAsync());
             } else {
 
                 Response.StatusCode = 404;

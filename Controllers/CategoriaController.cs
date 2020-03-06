@@ -11,7 +11,7 @@ namespace CasaShowAPI.Controllers
 {
     [Route("categorias")]
     [ApiController]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class CategoriaController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
