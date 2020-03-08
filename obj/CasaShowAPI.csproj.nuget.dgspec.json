@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LUMN\\Desktop\\VSCode\\CasaShowAPI\\CasaShowAPI.csproj": {}
+    "C:\\Users\\Luan\\Desktop\\Projetos\\ApiCasaShow\\CasaShowAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LUMN\\Desktop\\VSCode\\CasaShowAPI\\CasaShowAPI.csproj": {
+    "C:\\Users\\Luan\\Desktop\\Projetos\\ApiCasaShow\\CasaShowAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LUMN\\Desktop\\VSCode\\CasaShowAPI\\CasaShowAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Luan\\Desktop\\Projetos\\ApiCasaShow\\CasaShowAPI.csproj",
         "projectName": "CasaShowAPI",
-        "projectPath": "C:\\Users\\LUMN\\Desktop\\VSCode\\CasaShowAPI\\CasaShowAPI.csproj",
-        "packagesPath": "C:\\Users\\LUMN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LUMN\\Desktop\\VSCode\\CasaShowAPI\\obj\\",
+        "projectPath": "C:\\Users\\Luan\\Desktop\\Projetos\\ApiCasaShow\\CasaShowAPI.csproj",
+        "packagesPath": "C:\\Users\\Luan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Luan\\Desktop\\Projetos\\ApiCasaShow\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\LUMN\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Luan\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"

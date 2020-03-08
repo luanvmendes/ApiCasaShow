@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CasaShowAPI</name>
+    </assembly>
+    <members>
+        <member name="M:CasaShowAPI.Controllers.CasaDeShowController.Index">
+            <summary>
+            Listar casas de show cadastradas.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CasaDeShowController.Create(CasaShowAPI.Models.CasaDeShow)">
+            <summary>
+            Cadastrar casa de show.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CasaDeShowController.Edit(CasaShowAPI.Models.CasaDeShow)">
+            <summary>
+            Editar casa de show.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CasaDeShowController.DeleteConfirmed(System.Int32)">
+            <summary>
+            Remove uma casa de show.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CasaDeShowController.BuscaId(System.Int32)">
+            <summary>
+            Busca por id.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CasaDeShowController.NomeAsc">
+            <summary>
+            Listar em ordem alfabética crescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CasaDeShowController.NomeDesc">
+            <summary>
+            Listar em ordem alfabética decrescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CasaDeShowController.Busca(System.String)">
+            <summary>
+            Busca por nome.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CategoriaController.Index">
+            <summary>
+            Listar categorias.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CategoriaController.Create(CasaShowAPI.Models.Categoria)">
+            <summary>
+            Cadastrar categoria.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CategoriaController.Edit(CasaShowAPI.Models.Categoria)">
+            <summary>
+            Editar categoria.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.CategoriaController.DeleteConfirmed(System.Int32)">
+            <summary>
+            Remover categoria.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.Index">
+            <summary>
+            Listar evento.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.Create(CasaShowAPI.Models.Evento)">
+            <summary>
+            Cadastrar evento.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.Edit(CasaShowAPI.Models.Evento)">
+            <summary>
+            Editar evento.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.DeleteConfirmed(System.Int32)">
+            <summary>
+            Remover evento.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.BuscaId(System.Int32)">
+            <summary>
+            Busca por id.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.NomeAsc">
+            <summary>
+            Listar em ordem alfabética crescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.NomeDesc">
+            <summary>
+            Listar em ordem alfabética decrescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.DataAsc">
+            <summary>
+            Listar por data crescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.DataDesc">
+            <summary>
+            Listar por data decrescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.CapacidadeAsc">
+            <summary>
+            Listar por capacidade crescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.CapacidadeDesc">
+            <summary>
+            Listar por capacidade decrescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.PrecoAsc">
+            <summary>
+            Listar por preço crescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.EventoController.PrecoDesc">
+            <summary>
+            Listar por preço decrescente.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.VendasController.Index">
+            <summary>
+            Listar vendas.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.VendasController.Create(CasaShowAPI.Models.Venda)">
+            <summary>
+            Criar venda.
+            </summary>
+        </member>
+        <member name="M:CasaShowAPI.Controllers.VendasController.BuscaId(System.Int32)">
+            <summary>
+            Busca por id.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.UsuariosController.Registro(CasaShowAPI.Models.Usuario)">
+            <summary>
+            Cadastrar usuários.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.UsuariosController.Login(CasaShowAPI.Models.Usuario)">
+            <summary>
+            Logar usuário.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.UsuariosController.Index">
+            <summary>
+            Listar usuários.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.UsuariosController.BuscaId(System.Int32)">
+            <summary>
+            Busca por id.
+            </summary>
+        </member>
+    </members>
+</doc>
