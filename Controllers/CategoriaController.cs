@@ -71,36 +71,41 @@ namespace CasaShowAPI.Controllers
         [HttpPatch]
         public async Task<IActionResult> Edit([FromBody] Categoria categoria)
         {
-            if (categoria.Id == 0)
-            {
-                return NotFound("Id inválido");
-            }
+            try{
+                if (categoria.Id == 0)
+                {
+                    return NotFound("Id inválido");
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
-                    if (categoria.Nome == null || categoria.Nome.Length < 1) {
-                    Response.StatusCode = 204;
-                    return new ObjectResult ("");                
-                    }
-                    _context.Update(categoria);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CategoriaExists(categoria.Id))
+                    try
                     {
-                        return NotFound();
+                        if (categoria.Nome == null || categoria.Nome.Length < 1) {
+                            Response.StatusCode = 204;
+                            return new ObjectResult ("Nenhum campo foi alterado");                
+                        }
+                        _context.Update(categoria);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!CategoriaExists(categoria.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return Ok();
                 }
-                return Ok();
+                return BadRequest();                
+                
+            } catch (Exception){
+                return BadRequest("Você precisa informar um Id e um campo para ser editado");
             }
-            return BadRequest();
         }
 
         /// <summary>

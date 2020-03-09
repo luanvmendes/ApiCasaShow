@@ -72,46 +72,58 @@ namespace CasaShowAPI.Controllers
         {
             try
             {
-            if (casaDeShow.Id == 0)
-            {
-                return NotFound("Id inválido");
-            }
+                if (casaDeShow.Id == 0)
+                {
+                    return NotFound("Id inválido");
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
-                    if (CasaDeShowExists(casaDeShow.Id)) {
-                        var casa = _context.CasaShow.First(c => c.Id == casaDeShow.Id); 
-                        if (casa != null) {
-                            casa.Nome = casaDeShow.Nome != null && casaDeShow.Nome.Length > 1 ? casaDeShow.Nome : casa.Nome;
-                            casa.Endereco = casaDeShow.Endereco != null && casaDeShow.Endereco.Length > 1 ? casaDeShow.Endereco : casa.Endereco;
+                    try
+                    {
+                        if (CasaDeShowExists(casaDeShow.Id)) {
+                            var casa = _context.CasaShow.First(c => c.Id == casaDeShow.Id); 
+                            if (casa != null) {
+                                if (casaDeShow.Nome == null && casaDeShow.Endereco == null) {
+                                    return Ok("Nenhum campo alterado");
+                                }
+                                if (casaDeShow.Nome != null && casaDeShow.Nome.Length < 1) {
+                                    if (casaDeShow.Endereco == null || casaDeShow.Endereco.Length < 1){
+                                        return Ok("Nenhum campo alterado");
+                                    }
+                                }
+                                if (casaDeShow.Endereco != null && casaDeShow.Endereco.Length < 1) {
+                                    if (casaDeShow.Nome == null || casaDeShow.Nome.Length < 1){
+                                        return Ok("Nenhum campo alterado");
+                                    }
+                                }
+                                casa.Nome = casaDeShow.Nome != null && casaDeShow.Nome.Length > 0 ? casaDeShow.Nome : casa.Nome;
+                                casa.Endereco = casaDeShow.Endereco != null && casaDeShow.Endereco.Length > 0 ? casaDeShow.Endereco : casa.Endereco;
+                            }
+                            await _context.SaveChangesAsync();
+                            return Ok("Alterado com sucesso");
+                        } else {
+                            return NotFound("Id inválido");
                         }
-                        await _context.SaveChangesAsync();
-                    } else {
-                        return NotFound();
                     }
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CasaDeShowExists(casaDeShow.Id))
+                    catch (DbUpdateConcurrencyException)
                     {
-                        return NotFound();
+                        if (!CasaDeShowExists(casaDeShow.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
-                    else
-                    {
-                        throw;
-                    }
+                    //return RedirectToAction(nameof(Index));
                 }
-                return Ok();
-                //return RedirectToAction(nameof(Index));
-            }
-            
-            return BadRequest();
-            
+                
+                return BadRequest();                
                 
             } catch (Exception){
-                return BadRequest("Deu ruim");
+                return BadRequest("Você precisa informar um Id e um campo para ser editado");
             }
         }
 

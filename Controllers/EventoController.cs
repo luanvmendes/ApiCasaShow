@@ -102,37 +102,67 @@ namespace CasaShowAPI.Controllers
         [HttpPatch]
         public async Task<IActionResult> Edit([FromBody] Evento evento)
         {
-            if (evento.Id == 0)
-            {
-                return NotFound("Id inválido");
-            }
+            try{                
+                if (evento.Id == 0)
+                {
+                    return NotFound("Id inválido");
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
-                    evento.CasaShow = _context.CasaShow.First(cs => cs.Id == evento.CasaShow.Id);
-                    evento.Categoria = _context.Categorias.First(ctg => ctg.Id == evento.Categoria.Id);
-                    if (evento.Imagem != null) {
-                        evento.Imagem = evento.Imagem;
-                    }                    
-                    _context.Update(evento);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EventoExists(evento.Id))
+                    try
                     {
-                        return NotFound();
+                        var show = _context.Eventos.First(c => c.Id == evento.Id);
+                        if (show != null) {
+                            if (evento.Nome != null) {
+                                show.Nome = evento.Nome;
+                            }
+                            if (evento.Capacidade != 0) {
+                                show.Capacidade = evento.Capacidade;
+                            }
+                            if (evento.Data != null) {
+                                show.Data = evento.Data;
+                            }
+                            if (evento.ValorIngresso != 0) {
+                                show.ValorIngresso = evento.ValorIngresso;
+                            }
+                            if (evento.CasaShow != null){
+                                if (_context.CasaShow.Any(cs => cs.Id == evento.CasaShow.Id))
+                                    show.CasaShow = _context.CasaShow.First(cs => cs.Id == evento.CasaShow.Id);
+                                else 
+                                    return NotFound("Casa de show inválida");
+                            }
+                            if (evento.Categoria != null) {
+                                if (_context.Categorias.Any(ctg => ctg.Id == evento.Categoria.Id))
+                                    show.Categoria = _context.Categorias.First(ctg => ctg.Id == evento.Categoria.Id);
+                                else
+                                    return NotFound("Categoria inválida");
+                            }
+                            if (evento.Imagem != null && evento.Imagem.Length > 0) {
+                                show.Imagem = evento.Imagem;
+                            }
+                        }                   
+                        _context.Update(show);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!EventoExists(evento.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return Ok("Alterado com sucesso");
                 }
-                return Ok();
+                return BadRequest();                
+                
+            } catch (Exception){
+                return BadRequest("Você precisa informar um Id e um campo para ser editado");
             }
-            return BadRequest();
         }
 
         /// <summary>

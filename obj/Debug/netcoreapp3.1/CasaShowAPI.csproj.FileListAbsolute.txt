@@ -52,3 +52,8 @@ C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\System.Identity
 C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\obj\Debug\netcoreapp3.1\CasaShowAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\CasaShowAPI.xml
 C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\obj\Debug\netcoreapp3.1\CasaShowAPI.xml
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\publish\web.config
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\publish\appsettings.Development.json
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\publish\appsettings.json
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\publish\CasaShowAPI.deps.json
+C:\Users\LUMN\Desktop\VSCode\CasaShowAPI\bin\Debug\netcoreapp3.1\publish\CasaShowAPI.runtimeconfig.json
