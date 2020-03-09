@@ -11,7 +11,7 @@ namespace CasaShowAPI.Controllers
 {
     [Route("casadeshow")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class CasaDeShowController: ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -67,9 +67,10 @@ namespace CasaShowAPI.Controllers
         /// <summary>
         /// Editar casa de show.
         /// </summary>
-        [HttpPatch]
-        public async Task<IActionResult> Edit([FromBody] CasaDeShow casaDeShow)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Edit(int id, [FromBody] CasaDeShow casaDeShow)
         {
+            casaDeShow.Id = id;
             try
             {
                 if (casaDeShow.Id == 0)

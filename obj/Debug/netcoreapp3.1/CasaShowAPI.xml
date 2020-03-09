@@ -14,7 +14,7 @@
             Cadastrar casa de show.
             </summary>
         </member>
-        <member name="M:CasaShowAPI.Controllers.CasaDeShowController.Edit(CasaShowAPI.Models.CasaDeShow)">
+        <member name="M:CasaShowAPI.Controllers.CasaDeShowController.Edit(System.Int32,CasaShowAPI.Models.CasaDeShow)">
             <summary>
             Editar casa de show.
             </summary>
@@ -54,7 +54,7 @@
             Cadastrar categoria.
             </summary>
         </member>
-        <member name="M:CasaShowAPI.Controllers.CategoriaController.Edit(CasaShowAPI.Models.Categoria)">
+        <member name="M:CasaShowAPI.Controllers.CategoriaController.Edit(System.Int32,CasaShowAPI.Models.Categoria)">
             <summary>
             Editar categoria.
             </summary>
@@ -74,7 +74,7 @@
             Cadastrar evento.
             </summary>
         </member>
-        <member name="M:CasaShowAPI.Controllers.EventoController.Edit(CasaShowAPI.Models.Evento)">
+        <member name="M:CasaShowAPI.Controllers.EventoController.Edit(System.Int32,CasaShowAPI.Models.Evento)">
             <summary>
             Editar evento.
             </summary>

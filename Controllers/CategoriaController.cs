@@ -68,9 +68,10 @@ namespace CasaShowAPI.Controllers
         /// <summary>
         /// Editar categoria.
         /// </summary>
-        [HttpPatch]
-        public async Task<IActionResult> Edit([FromBody] Categoria categoria)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Edit(int id, [FromBody] Categoria categoria)
         {
+            categoria.Id = id;
             try{
                 if (categoria.Id == 0)
                 {

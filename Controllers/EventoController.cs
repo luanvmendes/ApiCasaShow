@@ -99,9 +99,10 @@ namespace CasaShowAPI.Controllers
         /// <summary>
         /// Editar evento.
         /// </summary>
-        [HttpPatch]
-        public async Task<IActionResult> Edit([FromBody] Evento evento)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Edit(int id, [FromBody] Evento evento)
         {
+            evento.Id = id;
             try{                
                 if (evento.Id == 0)
                 {
